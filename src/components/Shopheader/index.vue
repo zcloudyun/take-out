@@ -137,7 +137,9 @@ import {mapState} from 'vuex'
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
-
+  li{
+    list-style none
+  }
   .shop-header
     height 100%
     position relative
@@ -148,7 +150,7 @@ import {mapState} from 'vuex'
       background-size cover
       background-repeat no-repeat
       height 40px
-      padding 5px 10px
+      padding 0 10px
       position relative
       &::before
         content ""
@@ -169,7 +171,7 @@ import {mapState} from 'vuex'
           color: #fff
 
     .shop-content
-      padding 30px 20px 5px 20px
+      padding 6px 20px 5px 30px
       position relative
       display flex
       background #fff
@@ -180,7 +182,7 @@ import {mapState} from 'vuex'
         top: 0;
         left: 50%;
         width: 66px
-        height: 66px
+        height: 60px
         border-radius: 2px
         margin-left -33px
         margin-top -40px
