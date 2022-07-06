@@ -8,8 +8,8 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
-        // pathRewrite:{'^/api':''},
+        target: 'http://localhost:4000', //代理目标的基本路径
+        pathRewrite:{'^/api':''},//重写路径：去掉路径中开头的'/api'
       }
     }
   }

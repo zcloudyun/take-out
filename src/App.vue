@@ -11,7 +11,22 @@ export default {
   name:'APP',
  components:{
    FootGuide
- }
+ },
+ mounted()
+ {
+   this.food(),
+   this.userinfo()
+ },
+ methods: {
+    async food()
+    {
+     await this.$store.dispatch('getAddress')
+    },
+    async userinfo()
+    {
+      await this.$store.dispatch('getUserInfo')
+    }
+ },
 }
 </script>
 

@@ -11,7 +11,7 @@
 <script>
 export default {
 name:'HeaderTop',
-props:['title']
+props:['title'],
 }
 </script>
 
