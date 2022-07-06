@@ -37,7 +37,6 @@
           </div>
         </div>
       </transition>
-
     </div>
     <div class="list-mask" v-show="listShow" @click="toggleShow"></div>
   </div>
@@ -48,23 +47,25 @@ import { MessageBox } from 'mint-ui'
   import BScroll from 'better-scroll'
   import {mapState, mapGetters} from 'vuex'
   import CartControl from '@/components/Cartcontrol'
-
   export default {
     data () {
       return {
         isShow: false
       }
     },
-
+    components: {
+      CartControl
+    },
     computed: {
       ...mapState(['cartFoods', 'info']),
       ...mapGetters(['totalCount', 'totalPrice']),
+      //设置按钮的背景样式
       payClass () {
         const {totalPrice} = this
         const {minPrice} = this.info
-
         return totalPrice>=minPrice ? 'enough' : 'not-enough'
       },
+      //设置按钮上显示的文字
       payText () {
         const {totalPrice} = this
         const {minPrice} = this.info
@@ -76,14 +77,14 @@ import { MessageBox } from 'mint-ui'
           return '结算'
         }
       },
-
+      //购物车列表是否显示
       listShow () {
         // 如果总数量为0, 直接不显示
         if(this.totalCount===0) {
           this.isShow = false
           return false
         }
-
+        //如果购物车列表存在设置滚动效果
         if(this.isShow) {
           this.$nextTick(() => {
             // 实现BScroll的实例是一个单例
@@ -94,15 +95,11 @@ import { MessageBox } from 'mint-ui'
             } else {
               this.scroll.refresh() // 让滚动条刷新一下: 重新统计内容的高度
             }
-
           })
         }
-
         return this.isShow
       }
     },
-
-
     methods: {
       toggleShow () {
         // 只有当总数量大于0时切换
@@ -110,16 +107,13 @@ import { MessageBox } from 'mint-ui'
           this.isShow = !this.isShow
         }
       },
-
+      //清空购物车弹框
       clearCart () {
         MessageBox.confirm('确定清空购物车吗?').then(action => {
           this.$store.dispatch('clearCart')
         }, () => {});
       }
     },
-    components: {
-      CartControl
-    }
   }
 </script>
 

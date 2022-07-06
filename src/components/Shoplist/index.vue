@@ -82,7 +82,7 @@
 	        clearFix()
 	        display block
 	        box-sizing border-box
-	        padding 10px 8px
+	        padding 10px 0
 	        width 100%
 	        .shop_left
 	          float left
@@ -93,7 +93,7 @@
 	          .shop_img
 	            display block
 	            width 100%
-	            height 100%
+	            height 110%
 	        .shop_right
 	          float right
 	          width 77%
@@ -130,8 +130,7 @@
 	          .shop_rating_order
 	            clearFix()
 	            width 100%
-	            margin-top 18px
-	            margin-bottom 8px
+	            margin-top 15px
 	            .shop_rating_order_left
 	              float left
 	              color #ff9a0d

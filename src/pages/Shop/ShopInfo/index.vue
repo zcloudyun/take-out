@@ -11,14 +11,11 @@
           <div class="delivery-money">配送费￥{{info.deliveryPrice}}</div>
         </div>
       </section>
-
       <div class="split"></div>
-
       <section class="section">
         <h3 class="section-title">活动与服务</h3>
         <div class="activity">
-          <div class="activity-item" v-for="(support, index) in info.supports" :key="index"
-              :class="supportClasses[support.type]">
+          <div class="activity-item" v-for="(support, index) in info.supports" :key="index" :class="supportClasses[support.type]">
             <span class="content-tag">
               <span class="mini-tag">{{support.name}}</span>
             </span>
@@ -26,9 +23,7 @@
           </div>
         </div>
       </section>
-
       <div class="split"></div>
-
       <section class="section">
         <h3 class="section-title">商家实景</h3>
         <div class="pic-wrapper">
@@ -39,9 +34,7 @@
           </ul>
         </div>
       </section>
-
       <div class="split"></div>
-
       <section class="section">
         <h3 class="section-title">商家信息</h3>
         <ul class="detail">
@@ -59,7 +52,6 @@
   import BScroll from 'better-scroll'
   import {mapState} from 'vuex'
   export default {
-
     data () {
       return {
         supportClasses: ['activity-green', 'activity-red', 'activity-orange']
@@ -68,33 +60,32 @@
     computed: {
       ...mapState(['info'])
     },
-
     mounted () {
       // 如果数据还没有, 直接结束
       if(!this.info.pics) {
         return
       }
-
       // 数据有了, 可以创建BScroll对象形成滑动
       this._initScroll()
     },
-
     methods: {
       _initScroll () {
+        //竖直滑动
         new BScroll('.shop-info')
         // 动态计算ul的宽度
         const ul = this.$refs.picsUl
+        //每个li的宽度
         const liWidth = 120
+        //li与li之间的间隙
         const space = 6
+        //li的个数
         const count = this.info.pics.length
         ul.style.width = (liWidth + space) * count -space + 'px'
-
         new BScroll('.pic-wrapper', {
           scrollX: true // 水平滑动
         })
       }
     },
-
     watch: {
       info () {// 刷新流程--> 更新数据
         this.$nextTick(() => {

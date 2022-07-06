@@ -52,11 +52,7 @@ export default {
   [INCREMENT_FOOD_COUNT](state, {food}) {
     if(!food.count) { // 第一次增加
       // food.count = 1  // 新增属性(没有数据绑定)
-      /*
-      对象
-      属性名
-      属性值
-       */
+      //vue.set(对象，属性名，属性值)
       Vue.set(food, 'count', 1) // 让新增的属性也有数据绑定
       // 将food添加到cartFoods中
       state.cartFoods.push(food)

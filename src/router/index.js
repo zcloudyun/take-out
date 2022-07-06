@@ -10,6 +10,7 @@ import VueRouter from 'vue-router'
 // import Order from '../pages/Order'
 // import Profile from '../pages/Profile'
 
+//路由组件懒加载--只有需要使用的时候才去后台请求路由组件的代码
 const MSite = () => import('../pages/Msite')
 const Search = () => import('../pages/Search')
 const Order = () => import('../pages/Order')

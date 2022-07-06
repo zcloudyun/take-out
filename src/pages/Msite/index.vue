@@ -46,6 +46,7 @@
 <script>
 import HeaderTop from '@/components/HeaderTop'
 import Shoplist from '@/components/Shoplist'
+import BScroll from 'better-scroll'
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css'
 import { mapState } from 'vuex'
@@ -109,7 +110,10 @@ watch:{
 					    pagination: {
 					      el: '.swiper-pagination',
 					    },
-						})
+				    })
+					new BScroll('.miste-content-wrapper', {
+                     click: true
+                    })
 				})
 
 			}

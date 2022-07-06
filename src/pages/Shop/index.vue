@@ -12,6 +12,7 @@
         <router-link to="/shop/info" replace>商家</router-link>
       </div>
     </div>
+    <!-- 缓存路由对象：复用路由组件对象，复用路由组件获取的后台数组 -->
     <keep-alive>
       <router-view/>
     </keep-alive>

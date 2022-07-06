@@ -1,224 +1,204 @@
-#笔记
-##脚手架文件结构
-|—— node_modules
-|—— public
-|    |——favicon.ico:页面标签
-|    |——index.html:主页面
-|——src
-|    |——assets:存放静态资源
-|       |——logo.png
-|    |——component:存放组件
-|       |——helloworls.vue
-|    |——App.vue：汇总所有组件
-|    |——main.js:入口文件
-|——.gitignore:git版本管制忽略的配置
-|——babel.config.js:babel的配置文件
-|——package.json:应用包配置文件
-|——README.md：应用描述文件
-|——package-lock.json:包版本控制文件
+## 1. 项目开发准备
+    项目描述
+    技术选型
+    API接口
 
-##关于不同版本的vue
-  1、vue.js与vue.runtime.xxx.js的区别
-    （1）Vue.js是完整版的vue, 包含：核心功能 + 模板解析器
-    （2）vue.runtime.xxx.js是运行版的vue,只包含：核心功能：没有模板解析器
-  2、因为vue.runtime.xxx.js没有模板解析器，所以不能使用template配置项，需要使用render函数接收到的createElement函数去指定集体内容
+## 2. 开启项目开发
+    使用脚手架创建项目
+    安装所有依赖/指定依赖
+    开发环境运行
+    生产环境打包与发布
 
-##vue.config.js配置文件
-使用vue inspect > output.js可以查看到vue脚手架的默认配置
-使用vue.config.js可以对脚手架进行个性化定制
+## 3. 搭建项目整体界面结构
+    stylus的理解和使用
+        结构化, 变量, 函数/minxin(混合)
+    vue-router的理解和使用
+        router-view/router-link/keep-alive
+        $router: 路由器对象, 包含一些操作路由的功能函数, 来实现编程式导航(跳转路由)
+        $route: 当前路由对象, 一些当前路由信息数据的容器, path/meta/query/params
+    项目路由拆分
+    底部导航组件: FooterGuide
+    导航路由组件: Msite/Search/Order/Profile
 
+## 4. 抽取组件
+    头部组件: HeaderTop, 通过slot来实现组件通信标签结构
+    商家列表组件: ShopList
+    
+## 5. 登陆路由组件
+     静态组件
+     FooterGuide的显示/隐藏: 通过路由的meta
+     
+## 6. 后台项目
+    启动后台项目: 理解前后台分离
+    测试后台接口: 使用postman
+    修正接口文档
 
-
-#配置项props
-  功能：让组件接收外部传过来的数据
-  (1)传递数据：
-      <Demo name="xxx"/>
-  (2)接收数据
-      第一种方式（只接收）：
-         props:['name']
-      第二种方法（限制类型）：
-         props:{
-           name:String,
-           age:Number
-         }
-      第三种方法（限制类型、限制必要性、指定默认值）
-         props:{
-           name:{
-             type:String,   //类型
-             required:true, //必要性
-             default:'老王' //默认值
-           }
-         }
-
-    注意:props是只读，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，若业务需求确实需要修改，
-    那么请复制props的内容到data中一份，然后去修改data中的数据
-    <h2>{{myage}}<h2>
-    data(){
-      return {
-        myage:this.age
-      }
-    }
-    props:["age"]
-
-    如果字符串需要进行计算在前面加上:(v-bind)  例如： age+1    :age="19"
+## 7. 前后台交互
+    ajax请求库: axios
+    ajax请求函数封装: axios + promise
+    接口请求函数封装: 每个后台接口
 
 
 
-## mixin(混入)
-   功能：可以把多个组件共用的配置提取成一个混入对象
-   使用方式：
-       第一步 定义混合，例如：
-          export const hunhe= {
-             data(){....},
-             methods:{....}
-             ....
-           }
-      第二步 使用混入，例如：
-          （1）全局混入：vue.mixin(xxx)
-          （2）局部混入：mixins:['xxx']
+## 1. 异步数据
+    封装ajax: 
+        promise+axios封装ajax请求的函数
+        封装每个接口对应的请求函数(能根据接口定义ajax请求函数)
+        解决ajax的跨越域问题: 配置代理, 对代理的理解
+    vuex编码
+        创建所有相关的模块: store/index|state|mutations|actions|getters|mutation-types
+        设计state: 从后台获取的数据
+        实现actions: 
+            定义异步action: async/await
+            流程:　发ajax获取数据, commit给mutation
+        实现mutations: 给状态赋值
+        实现index: 创建store对象
+        main.js: 配置store
+    组件异步显示数据
+        在mounted()通过$store.dispatch('actionName')来异步获取后台数据到state中
+        mapState(['xxx'])读取state中数据到组件中
+        在模板中显示xxx的数据
+    模板中显示数据的来源
+        data: 自身的数据(内部改变)
+        props: 外部传入的数据(外部改变)
+        computed: 根据data/props/别的compute/state/getters
+    异步显示轮播图
+        通过vuex获取foodCategorys数组(发请求, 读取)
+        对数据进行整合计算(一维变为特定的二维数组)
+        使用Swiper显示轮播, 如何在界面更新之后创建Swiper对象?
+            1). 使用回调+$nextTick()
+            2). 使用watch+$nextTick()	
+    		
+## 2. 登陆/注册: 界面相关效果
+    a. 切换登陆方式
+    b. 手机号合法检查
+    c. 倒计时效果
+    d. 切换显示或隐藏密码
+    g. 前台验证提示
+    
+## 3. 前后台交互相关问题
+    1). 如何查看你的应用是否发送某个ajax请求?  
+        浏览器的network
+    2). 发ajax请求404
+        请求的路径的对
+        代理是否生效(配置和重启)
+        服务器应用是否运行
+    3). 后台返回了数据, 但页面没有显示?
+        vuex中是否有
+        组件中是否读取
+        
+## 1. 完成登陆/注册功能
+    1). 2种方式
+       手机号/短信验证码登陆
+       用户名/密码/图片验证码登陆
+    2). 登陆的基本流程
+       表单前台验证, 如果不通过, 提示
+       发送ajax请求, 得到返回的结果
+       根据结果的标识(code)来判断登陆请求是否成功
+           1: 不成功, 显示提示
+           0. 成功, 保存用户信息, 返回到上次路由
+    3). vue自定义事件
+       绑定监听: @eventName="fn"  function fn (data) {// 处理}
+       分发事件: this.$emit('eventName', data)
+    4). 注意:
+       使用network查看请求(路径/参数/请求方式/响应数据)
+       使用vue的chrome插件查看vuex中的state和组件中的数据
+       使用debugger语句调试代码
+       实参类型与形参类型的匹配问题
+       
+## 2. 搭建商家整体界面
+    1). 拆分界面路由
+    2). 路由的定义/配置|使用
 
-## export default向外暴露成员  使用时 import xxx from "./yyy"   例如组件   import Student from "./component/Student"
-## export const    使用时 import {xxx} from "./yyy"    例如混入  import {mixin} from "./mixin.js"
+## 3. 模拟(mock)数据/接口
+    1). 前后台分离的理解
+    2). mockjs的理解和使用
+    3). jons数据设计的理解
+     
+## 4. ShopHeader组件
+    1). 异步显示数据效果的编码流程
+        ajax
+          ajax请求函数
+          接口请求函数
+        vuex
+          state
+          mutation-types
+          actions
+          mutations
+        组件
+          dispatch(): 异步获取后台数据到vuex的state
+          mapState(): 从vuex的state中读取对应的数据
+          模板中显示
+    2). 初始显示异常
+        情况1: Cannot read property 'xxx' of undefined"
+        原因: 初始值是空对象, 内部没有数据, 而模块中直接显示3层表达式
+        解决: 使用v-if指令
+        
+        情况2: Cannot read property 'xxx' of null"
+     
+    3). vue transition动画
+    
 
+## 1. ShopGoods组件
+    1). 动态展现列表数据
+    2). 基本滑动:
+        使用better-scroll
+        理解其基本原理
+        创建BScroll对象的时机
+          watch + $nextTick()
+          callback + $nextTick
+    3). 滑动右侧列表, 左侧同步更新
+        better-scroll禁用了原生的dom事件, 使用的是自定义事件
+        绑定监听: scroll/scrollEnd
+        滚动监听的类型: probeType
+        列表滑动的3种类型
+            手指触摸
+            惯性
+            编码
+        分析:
+            类名: current 标识当前分类
+            设计一个计算属性: currentIndex
+            根据哪些数据计算?
+              scrollY: 右侧滑动的Y轴坐标 (滑动过程时实时变化)
+              tops: 所有右侧分类li的top组成的数组  (列表第一次显示后就不再变化)
+        编码:
+            1). 在滑动过程中, 实时收集scrollY
+            2). 列表第一次显示后, 收集tops
+            3). 实现currentIndex的计算逻辑
+    4). 点击左侧列表项, 右侧滑动到对应位置
+    
+    
+## 2. CartControl组件
+    1). 问题: 更新状态数据, 对应的界面不变化
+        原因: 一般方法给一个已有绑定的对象中添加一个新的属性, 这个属性没有数据绑定
+        解决: 
+            Vue.set(obj, 'xxx', value)才有数据绑定
+            this.$set(obj, 'xxx', value)才有数据绑定
+            
+## 3. ShopCart组件
+    1). 使用vuex管理购物项数据: cartFoods
+    2). 解决几个功能性bug
 
-##插件
+## 4. Food组件
+    1). 父子组件:
+        子组件调用父组件的方法: 通过props将方法传递给子组件
+        父组件调用子组件的方法: 通过ref找到子组件标签对象
 
-   功能：用于增强Vue
-   本质：包含install方法的一个对象，install的第一个参数是Vue，第二个以后的参数是插件使用者传递的数据
-   定义插件：
-     对象.install=function(Vue,options){
-       <!-- 1、添加全局过滤器 -->
-       Vue.filter(...)
-       <!-- 2、添加全局指令 -->
-       Vue.directive(...)
-       <!-- 3、配置全局混入（合） -->
-       Vue.mixin(...)
-       <!-- 4、添加实例方法 -->
-       Vue.prototype.$myMethod=function()(...)
-       Vue.prototype.$myProperty=xxx
-     }
-     使用插件:Vue.use()
+## 1. ShopRatings组件
+    1). 列表的过滤显示
+    2). 自定义过滤器
+    
+## 2. ShopInfo组件
+    1). 使用better-scroll实现两个方向的滑动
+    1). 通过JS动态操作样式
+    2). 解决当前路由刷新异常的bug
+    
+## 3. Search组件
+    1). 根据关键字来异步搜索显示匹配的商家列表
+    2). 如实实现没有搜索结果的提示显示
 
-
-
-## scoped样式
-   作用:让样式在局部生效，防止冲突
-   写法<stype scoped>
-
-## 总结todolist案例
-1、组件编程流程：
-  （1）拆分静态组件：组件要按照功能点拆分，命名不要与html元素冲突
-  （2）实现动态组件：考虑好数据的存放位置，数据是一个组件在用，还是一些组件在用
-      1）一个组件在用：放在组件自身即可
-      2）一些组件在用：放在他们共同的父组件上（状态提升）
-  （3）实现交互：从绑定事件开始
-2、props适用下：
-   （1）父组件==>子组件通信
-   （2）子组件==>父组件通信（要求父先给子一个函数）
-3、使用v-model时要切记：v-model绑定的值不能是props传过来的值，因为props是不可以修改的
-4、props传过来的若是对象类型的值，修改对象中的属性时Vue不会报错，但不推荐这样做
-
-
-##组件的自定义事件
-1、一种组件间通信的方式，适用于  子组件===>父组件
-2、使用场景：A是父组件，B是子组件，B想给A传数据，那么就要在A中给B绑定自定义事件（事件的回调在A中）
-3、绑定自定义事件：    
-        1、第一种方式，在父组件中：<Demo @atguigu="test"/>或<Demo v-on:aiguigu="test"/>
-        2、第二种方式，在父组件中：
-        <Demo ref="demo"/>
-        ...
-        mounted(){
-          this.$refs.xxx.$on('atguigu',this.test)
-        }
-        3、若想让自定义事件只能触发一次，可以使用once修饰符，或$once方法
-4、触发自定义事件：this.$emit('atguigu',数据)
-5、解绑自定义事件:this.$off('atguigu')
-6、组件上也可以绑定原生DOM事件，需要使用native修饰符
-7、注意：通过this.$refs.xxx.$on("atguigu",回调)绑定自定是事件，回调要么配置在methods中，要么用箭头函数，否则this指向会出问题 
-
-
-##全局事件总线
-1、一种组件间通信的方式，适用于任意组件间通信
-2、安装全局事件总线：
-   new Vue({
-     ...
-     beforeCreate（）{
-       Vue.prototype.$bus=this  //安装全局事件总线，$bus就是当前运用的vm
-     },
-     ....
-   })
-
-3、使用事件总线
-   1、接收数据：A组件想接收数据，则A组件中给$bus绑定自定义事件，事件的回调留在A组件自身
-   methosd:{
-     demo(data){
-     }
-     ...
-     mounted(){
-       this.$bus.$on('xxx',this.demo)
-     }
-   }
-    2、提供数据  this.$bus.$emit('xxx',数据)
-4、最好在beforeDestory钩子中，用$off去解绑当前组件所用到的事件
-
-
-##消息订阅与发布(pubsub)
-1、一种组件间通信的方式，适用于任意组件间通信
-2、使用步骤：
-  1、安装pubsub: npm i pubsub-js
-  2、引入: import pubsub from 'pubsub-js'
-  3、接收数据：A组件想接收数据，则在A组件中订阅信息，订阅的回调留在A组件自身
-    methods(){
-      demo(subname,data)
-      {
-        console.log("接收到的数据为",subname,data)
-      
-      }
-      }
-      ...
-      mountend(){
-        this.pubid=pubsub.subscribe('xxx',this.demo)//订阅消息
-      }或者
-      mounted(){
-        thi.pubid=pubsub.subscribe('xxx',(a,b)=>{
-          console.log("接收到的数据",a,b)
-        })
-      }
-  4、提供数据: pubsub.publish('xxx',数据)
-  5、最好在deforeDestroy钩子中，用pubsub.unsubscribe(pubid)//取消订阅
-
-
-  ## nextTick
-  1、语法：this.$nextTick(回调函数)
-  2、作用：在下一次DOM更新结束后执行其指定的回调
-  3、什么时候用：当改变数据后，要基于更新后的新DOM进行某些操作时，要在nextTick所指定的回调函数中执行
-
-
-
-  ## Vue 封装的过渡与动画
-1、作用：在插入、更新或移除DOM元素时，在合适的时候给元素添加样式类名
-2、图示：
-        enter                          leave
-       /   \                          /   \
-v-enter   v-enter-to           v-leave    v-leave-to
-     ——————                           ——————
-       |                                |
-   v-enter-active                v-leave-active
-
-
-3、写法
-  1、准备好样式：
-      元素进入的样式：
-         1、v-enter：进入的起点
-         2、v-enter-active:进入过程中
-         3、v-enter-to:进入的终点
-      元素离开的样式
-         1、v-leave：离开的起点
-         2、v-leave-active:离开的过程中
-         3、v-leave-to:离开的终点
-  2、使用<transition>包裹要过度的元素，并配置name属性：
-  <transition name="hello">
-     <h1 v-show="isshow">你好</h1>
-  </transition>
-  3、注意：
-  若要多个元素需要过度，则需要使用:<transition-group>,且每个元素都要指定key值
+## 4. 项目优化
+    1). 缓存路由组件对象
+    2). 路由组件懒加载
+    3). 图片司加载: vue-lazyload
+    4). 分析打包文件并优化 
